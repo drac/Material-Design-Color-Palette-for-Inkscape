@@ -8,8 +8,7 @@ A full palette of <a href="http://www.google.com/design/spec/style/color.html">A
 How to Install Palette to Inkscape
 ---------------------------------
 
-Inkscape uses the same file format for palettes as the GNU Image Manipulation Program (GIMP Colour Palettes, .gpl).
-<br>To install a palette, simply **copy** the **.gpl** file to the **share/palettes** directory in your Inkscape installation. 
+Inkscape uses the same file format for palettes as the GNU Image Manipulation Program (GIMP Colour Palettes, .gpl). To install a palette, simply **copy** the **.gpl** file to the **share/palettes** directory in your Inkscape installation. 
 
 **Example:**
 * **Linux:** /usr/share/inkscape/palettes/
