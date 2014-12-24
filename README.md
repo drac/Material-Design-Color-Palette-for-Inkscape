@@ -13,6 +13,6 @@ Inkscape uses the same file format for palettes as the GNU Image Manipulation Pr
 **Example:**
 * **Linux:** ~/.config/inkscape/palettes/
   
-* **OS X:** Open the Applications folder and right-click on the Inkscape application and select Show Package Contents.This should open a new Finder window and now you can open the Contents folder, then Resources and finally palettes. Copy the **.gpl** file into this final folder.
+* **OS X:** ~/.config/inkscape/palettes/
   
 * **Windows:** %APPDATA%\inkscape\palettes\
