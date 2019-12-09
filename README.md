@@ -1,7 +1,7 @@
 Material Design Color Palette for Inkscape
 ==========================================
 
-A full palette of <a href="http://www.google.com/design/spec/style/color.html">Android Material Design</a> for <a href="https://inkscape.org/">inkscape</a>.
+A full palette of <a href="http://www.google.com/design/spec/style/color.html">Google Material Design</a> for <a href="https://inkscape.org/">inkscape</a>.
 
 
 
