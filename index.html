@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material Design Palette</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .color-box {
+      width: 150px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .color-box span {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 5px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Material Design Color Palette</h1>
+  <div id="paletteContainer"></div>
+
+  <script>
+    // Function to parse the .gpl file
+    function parseGPLFile(fileContent) {
+      const colors = [];
+      const lines = fileContent.split('\n');
+      lines.forEach(line => {
+        if (line.trim() && !line.startsWith('#') && !line.startsWith('GIMP') && !line.startsWith('Name') && !line.startsWith('Columns') && !line.startsWith('000 000 000 DIVIDER')) {
+          const parts = line.trim().split(/\s+/);
+          if (parts.length >= 4) {
+            const r = parts[0];
+            const g = parts[1];
+            const b = parts[2];
+            const name = parts.slice(3).join(' ');
+            const hexColor = `rgb(${r},${g},${b})`;
+            colors.push({ name, hexColor });
+          }
+        }
+      });
+      return colors;
+    }
+
+    // Function to display the colors
+    function displayColors(colors) {
+      const paletteContainer = document.getElementById('paletteContainer');
+      paletteContainer.innerHTML = ''; // Clear previous content
+
+      colors.forEach(color => {
+        const colorBox = document.createElement('div');
+        colorBox.classList.add('color-box');
+        colorBox.style.backgroundColor = color.hexColor;
+
+        const colorLabel = document.createElement('span');
+        colorLabel.textContent = `${color.name} (${color.hexColor})`;
+        colorBox.appendChild(colorLabel);
+
+        paletteContainer.appendChild(colorBox);
+      });
+    }
+
+    // Fetch the .gpl file from the root directory and process it
+    fetch('./Material_Design.gpl')
+      .then(response => response.text())
+      .then(fileContent => {
+        const colors = parseGPLFile(fileContent);
+        displayColors(colors);
+      })
+      .catch(error => {
+        console.error('Error loading .gpl file:', error);
+      });
+  </script>
+
+</body>
+
+</html>
