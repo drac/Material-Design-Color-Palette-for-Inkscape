@@ -8,6 +8,9 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+    }
+
+    #paletteContainer {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -30,6 +33,14 @@
       padding: 5px;
       border-radius: 5px;
     }
+
+    /* Divider row style */
+    .divider {
+      width: 100%;
+      height: 0;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #000;
+    }
   </style>
 </head>
 
@@ -44,7 +55,10 @@
       const colors = [];
       const lines = fileContent.split('\n');
       lines.forEach(line => {
-        if (line.trim() && !line.startsWith('#') && !line.startsWith('GIMP') && !line.startsWith('Name') && !line.startsWith('Columns') && !line.startsWith('000 000 000 DIVIDER')) {
+        if (line.startsWith('000 000 000 DIVIDER')) {
+          // Push a divider flag into the array
+          colors.push({ type: 'divider' });
+        } else if (line.trim() && !line.startsWith('#') && !line.startsWith('GIMP') && !line.startsWith('Name') && !line.startsWith('Columns')) {
           const parts = line.trim().split(/\s+/);
           if (parts.length >= 4) {
             const r = parts[0];
@@ -52,7 +66,7 @@
             const b = parts[2];
             const name = parts.slice(3).join(' ');
             const hexColor = `rgb(${r},${g},${b})`;
-            colors.push({ name, hexColor });
+            colors.push({ type: 'color', name, hexColor });
           }
         }
       });
@@ -64,16 +78,24 @@
       const paletteContainer = document.getElementById('paletteContainer');
       paletteContainer.innerHTML = ''; // Clear previous content
 
-      colors.forEach(color => {
-        const colorBox = document.createElement('div');
-        colorBox.classList.add('color-box');
-        colorBox.style.backgroundColor = color.hexColor;
+      colors.forEach(item => {
+        if (item.type === 'divider') {
+          // Create a new row when a divider is found
+          const divider = document.createElement('div');
+          divider.classList.add('divider');
+          paletteContainer.appendChild(divider);
+        } else if (item.type === 'color') {
+          // Create the color box
+          const colorBox = document.createElement('div');
+          colorBox.classList.add('color-box');
+          colorBox.style.backgroundColor = item.hexColor;
 
-        const colorLabel = document.createElement('span');
-        colorLabel.textContent = `${color.name} (${color.hexColor})`;
-        colorBox.appendChild(colorLabel);
+          const colorLabel = document.createElement('span');
+          colorLabel.textContent = `${item.name} (${item.hexColor})`;
+          colorBox.appendChild(colorLabel);
 
-        paletteContainer.appendChild(colorBox);
+          paletteContainer.appendChild(colorBox);
+        }
       });
     }
 
